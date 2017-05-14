@@ -19,6 +19,7 @@ describe('main window', function spec() {
     if (this.app && this.app.isRunning()) {
       return this.app.stop();
     }
+    return undefined;
   });
 
   const findCounter = () => this.app.client.element('[data-tid="counter"]');
@@ -102,11 +103,11 @@ describe('main window', function spec() {
   it('should back to home if back button clicked', async () => {
     const { client } = this.app;
     await client.element(
-      '[data-tid="backButton"] > a'
+      '[data-tid="backButton"] > a',
     ).click();
 
     expect(
-      await client.isExisting('[data-tid="container"]')
+      await client.isExisting('[data-tid="container"]'),
     ).toBe(true);
   });
 });
