@@ -1,11 +1,16 @@
 // @flow
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
-import counter from './counter';
+import timer from './timer';
+import type { timerStateType } from './timer';
+
+export type stateType = {
+  timer: timerStateType,
+};
 
 const rootReducer = combineReducers({
-  counter,
   router,
+  timer,
 });
 
 export default rootReducer;

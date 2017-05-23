@@ -5,7 +5,11 @@ import Root from './containers/Root';
 import { configureStore, history } from './store/configureStore';
 import './app.global.css';
 
-const store = configureStore();
+const store = configureStore({
+  timer: {
+    startTime: null,
+  },
+});
 
 render(
   <AppContainer>

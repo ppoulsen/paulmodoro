@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
+  "name": "paulmodoro",
+  "productName": "Paulmodoro",
   "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Pomodoro tracking with Slack integration",
   "main": "./main.prod.js",
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Paul Poulsen",
+    "email": "ppoulsen21@gmail.com",
+    "url": "https://github.com/ppoulsen"
   },
   "scripts": {
     "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
