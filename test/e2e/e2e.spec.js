@@ -49,6 +49,6 @@ describe('main window', function spec() {
     const { client } = this.app;
 
     await client.click('[data-tid=container] > a');
-    expect(await findTimer().getText()).toBe('0');
+    expect(await findTimer().getText()).toBe('Not Started');
   });
 });
