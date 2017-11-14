@@ -12,7 +12,6 @@
   "rules": {
     "arrow-parens": ["off"],
     "compat/compat": "error",
-    "flowtype-errors/show-errors": "error",
     "import/no-unresolved": "error",
     "import/no-extraneous-dependencies": "off",
     "no-console": "off",
@@ -22,8 +21,6 @@
     "promise/no-native": "off",
   },
   "plugins": [
-    "flowtype",
-    "flowtype-errors",
     "import",
     "promise",
     "compat",

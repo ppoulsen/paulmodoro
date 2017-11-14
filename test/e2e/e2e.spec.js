@@ -45,10 +45,10 @@ describe('main window', function spec() {
     expect(logs).toHaveLength(0);
   });
 
-  it('should to Timer with click "to Timer" link', async () => {
+  it('should go to Timer with click "to Timer" link', async () => {
     const { client } = this.app;
 
-    await client.click('[data-tid=container] > a');
+    await client.click('[data-tid="container"] a');
     expect(await findTimer().getText()).toBe('Not Started');
   });
 });

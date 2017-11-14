@@ -1,14 +1,9 @@
-// @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import styles from './Timer.css';
-import type { timerStateType } from '../reducers/types/timer-state-type';
 
-const Timer = (props: {
-  startTimer: () => void,
-  stopTimer: () => void,
-  timer: timerStateType}) => {
+const Timer = props => {
   const { startTimer, stopTimer, timer } = props;
   let remaining = 'Not Started';
   if (timer.startTime) {

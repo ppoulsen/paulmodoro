@@ -1,6 +1,4 @@
-// @flow
 import moment from 'moment';
-import type { stateType } from '../reducers';
 
 export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
@@ -13,7 +11,7 @@ export function stopTimer() {
 }
 
 export function startTimer() {
-  return (dispatch: () => void, getState: () => stateType) => {
+  return (dispatch, getState) => {
     if (getState().timer.startTime) {
       return;
     }

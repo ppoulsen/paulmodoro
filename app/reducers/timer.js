@@ -1,20 +1,14 @@
-// @flow
 import moment from 'moment';
-import type { timerStateType } from './types/timer-state-type';
 import {
   START_TIMER,
   STOP_TIMER,
   TICK_TIMER,
 } from '../actions/timer';
 
-type actionType = {
-  type: string,
-};
-
-export default function timer(state: timerStateType = {
+export default function timer(state = {
   startTime: null,
   duration: moment.duration(25, 'minutes'),
-}, action: actionType) {
+}, action) {
   switch (action.type) {
     case START_TIMER:
       return {
