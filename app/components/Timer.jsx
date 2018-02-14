@@ -5,10 +5,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import styles from './Timer.css';
 
 const Timer = props => {
-  const { startTimer, stopTimer, timer } = props;
+  const { startTimer, stopTimer, timer, durationMinutes } = props;
   let remaining = 'Not Started';
+  const duration = moment.duration(durationMinutes, 'minutes');
   if (timer.startTime) {
-    const endTime = timer.startTime.clone().add(timer.duration);
+    const endTime = timer.startTime.clone().add(duration);
     const now = moment();
     let diffMs = endTime.diff(now);
 
@@ -18,8 +19,8 @@ const Timer = props => {
     }
 
     remaining = moment(diffMs).format('mm:ss.SSS');
-  } else if (timer.duration) {
-    remaining = moment.utc(timer.duration.asMilliseconds()).format('mm:ss.SSS');
+  } else if (duration) {
+    remaining = moment.utc(duration.asMilliseconds()).format('mm:ss.SSS');
   }
   const button = !timer.startTime
     ? <RaisedButton label="Start" onClick={startTimer} primary />

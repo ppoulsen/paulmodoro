@@ -7,14 +7,12 @@ import {
 
 export default function timer(state = {
   startTime: null,
-  duration: moment.duration(25, 'minutes'),
 }, action) {
   switch (action.type) {
     case START_TIMER:
       return {
         ...state,
         startTime: moment(),
-        duration: moment.duration(25, 'minutes'),
       };
     case STOP_TIMER:
       return {

@@ -6,6 +6,7 @@ import * as TimerActions from '../actions/timer';
 function mapStateToProps(state) {
   return {
     timer: state.timer,
+    durationMinutes: state.settings.sessionLengthMinutes,
   };
 }
 

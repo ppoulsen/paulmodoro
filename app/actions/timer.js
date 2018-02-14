@@ -24,8 +24,9 @@ export function startTimer() {
     const tick = () => {
       const state = getState();
       const startTime = state.timer.startTime;
+      const duration = moment.duration(state.settings.sessionLengthMinutes, 'minutes');
 
-      const running = !!startTime && moment().isBefore(startTime.clone().add(state.timer.duration));
+      const running = !!startTime && moment().isBefore(startTime.clone().add(duration));
       if (running) {
         dispatch({ type: TICK_TIMER });
       } else {
