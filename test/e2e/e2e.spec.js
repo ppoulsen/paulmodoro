@@ -22,15 +22,13 @@ describe('main window', function spec() {
     return undefined;
   });
 
-  const findTimer = () => this.app.client.element('[data-tid="timer"]');
-
   it('should open window', async () => {
     const { client, browserWindow } = this.app;
 
     await client.waitUntilWindowLoaded();
     await delay(500);
     const title = await browserWindow.getTitle();
-    expect(title).toBe('Hello Electron React!');
+    expect(title).toBe('Paulmodoro');
   });
 
   it('should haven\'t any logs in console of main window', async () => {
@@ -43,12 +41,5 @@ describe('main window', function spec() {
       console.log(log.level);
     });
     expect(logs).toHaveLength(0);
-  });
-
-  it('should go to Timer with click "to Timer" link', async () => {
-    const { client } = this.app;
-
-    await client.click('[data-tid="container"] a');
-    expect(await findTimer().getText()).toBe('Not Started');
   });
 });

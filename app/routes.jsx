@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
-import HomePage from './containers/HomePage';
 import TimerPage from './containers/TimerPage';
+import SettingsPage from './containers/SettingsPage';
 
 const mapStateToProps = state => ({ location: state.router.location });
 
@@ -13,7 +13,7 @@ export default () => (
   <App>
     <ConnectedSwitch>
       <Route path="/timer" component={TimerPage} />
-      <Route path="/" component={HomePage} />
+      <Route path="/settings" component={SettingsPage} />
     </ConnectedSwitch>
   </App>
 );

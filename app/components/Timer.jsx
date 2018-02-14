@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 import styles from './Timer.css';
 
 const Timer = props => {
@@ -17,25 +18,23 @@ const Timer = props => {
     }
 
     remaining = moment(diffMs).format('mm:ss.SSS');
+  } else if (timer.duration) {
+    remaining = moment.utc(timer.duration.asMilliseconds()).format('mm:ss.SSS');
   }
+  const button = !timer.startTime
+    ? <RaisedButton label="Start" onClick={startTimer} primary />
+    : <RaisedButton label="Reset" onClick={stopTimer} secondary />;
   return (
-    <div>
-      <div className={styles.backButton} data-tid="backButton">
-        <Link to="/">
-          <i className="fa fa-arrow-left fa-3x" />
-        </Link>
-      </div>
-      <div className={`counter ${styles.counter}`} data-tid="timer">
-        {remaining}
-      </div>
-      <div className={styles.btnGroup}>
-        <button className={styles.btn} onClick={startTimer} data-tclass="btn">
-          <i className="fa fa-plus" />
-        </button>
-        <button className={styles.btn} onClick={stopTimer} data-tclass="btn">
-          <i className="fa fa-minus" />
-        </button>
-      </div>
+    <div className={styles.container}>
+      <h1>Timer</h1>
+      <Paper className={styles.paper} zDepth={3}>
+        <div className={`counter ${styles.counter}`} data-tid="timer">
+          {remaining}
+        </div>
+        <div className={styles.btnGroup}>
+          {button}
+        </div>
+      </Paper>
     </div>
   );
 };

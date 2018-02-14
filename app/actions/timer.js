@@ -34,6 +34,6 @@ export function startTimer() {
       }
     };
 
-    interval = setInterval(tick, 10);
+    interval = setInterval(tick, 47);
   };
 }
