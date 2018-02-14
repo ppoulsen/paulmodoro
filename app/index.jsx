@@ -3,9 +3,10 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Root from './containers/Root';
 import { configureStore, history } from './store/configureStore';
+import config from './config';
 import './app.global.css';
 
-const store = configureStore();
+const store = configureStore(config.store);
 
 history.push('/timer');
 

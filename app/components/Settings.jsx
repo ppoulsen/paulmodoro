@@ -4,9 +4,16 @@ import Slider from 'material-ui/Slider';
 import styles from './Settings.css';
 
 class Settings extends React.Component {
-  propTypes = {
+  static propTypes = {
     breakLengthMinutes: React.PropTypes.number,
     sessionLengthMinutes: React.PropTypes.number,
+    setSessionLengthMinutes: React.PropTypes.func.isRequired,
+    setBreakLengthMinutes: React.PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    breakLengthMinutes: 5,
+    sessionLengthMinutes: 25,
   };
 
   state = {
@@ -14,16 +21,24 @@ class Settings extends React.Component {
     sessionLengthMinutes: null,
   };
 
-  onSessionLengthChange = (evt, newValue) => this.setState({ sessionLengthMinutes: newValue });
-
-  onSessionLengthSave = () => {
-    // TODO: Dispatch save.then
+  onSessionLengthChange = (evt, newValue) => {
+    this.sessionLengthMinutes = newValue;
+    this.setState({ sessionLengthMinutes: newValue });
   };
 
-  onBreakLengthChange = (evt, newValue) => this.setState({ breakLengthMinutes: newValue });
+  onSessionLengthSave = () => {
+    this.props.setSessionLengthMinutes(this.sessionLengthMinutes);
+    this.setState({ sessionLengthMinutes: null });
+  };
+
+  onBreakLengthChange = (evt, newValue) => {
+    this.breakLengthMinutes = newValue;
+    this.setState({ breakLengthMinutes: newValue });
+  };
 
   onBreakLengthSave = () => {
-    // TODO: Dispatch save.then
+    this.props.setBreakLengthMinutes(this.breakLengthMinutes);
+    this.setState({ breakLengthMinutes: null });
   };
 
   getSessionLength = () => this.state.sessionLengthMinutes
