@@ -4,6 +4,9 @@ import {
   STOP_TIMER,
   TICK_TIMER,
 } from '../actions/timer';
+import {
+  SESSION_TIMER,
+} from '../constants/timerType';
 
 export default function timer(state = {
   startTime: null,
@@ -13,11 +16,13 @@ export default function timer(state = {
       return {
         ...state,
         startTime: moment(),
+        timerType: action.timerType,
       };
     case STOP_TIMER:
       return {
         ...state,
         startTime: null,
+        timerType: SESSION_TIMER,
       };
     case TICK_TIMER:
       return {
