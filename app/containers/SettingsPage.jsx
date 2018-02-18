@@ -8,6 +8,7 @@ function mapStateToProps(state) {
     breakLengthMinutes: state.settings.breakLengthMinutes,
     sessionLengthMinutes: state.settings.sessionLengthMinutes,
     soundEnabled: state.settings.soundEnabled,
+    notificationsEnabled: state.settings.notificationsEnabled,
   };
 }
 

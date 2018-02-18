@@ -1,6 +1,7 @@
 export const SET_SESSION_LENGTH_MINUTES = 'SET_SESSION_LENGTH_MINUTES';
 export const SET_BREAK_LENGTH_MINUTES = 'SET_BREAK_LENGTH_MINUTES';
 export const SET_SOUND_ENABLED = 'SET_SOUND_ENABLED';
+export const SET_NOTIFICATIONS_ENABLED = 'SET_NOTIFICATIONS_ENABLED';
 
 export function setSessionLengthMinutes(minutes) {
   return {
@@ -20,5 +21,12 @@ export function setSoundEnabled(soundEnabled) {
   return {
     type: SET_SOUND_ENABLED,
     soundEnabled,
+  };
+}
+
+export function setNotificationsEnabled(notificationsEnabled) {
+  return {
+    type: SET_NOTIFICATIONS_ENABLED,
+    notificationsEnabled,
   };
 }

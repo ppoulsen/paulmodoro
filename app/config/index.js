@@ -6,6 +6,7 @@ const config = new Store({
       sessionLengthMinutes: 25,
       breakLengthMinutes: 5,
       soundEnabled: true,
+      notificationsEnabled: true,
     },
   },
   name: 'paulmodoro-settings',

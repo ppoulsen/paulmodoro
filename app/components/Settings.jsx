@@ -11,13 +11,16 @@ class Settings extends React.Component {
     setSessionLengthMinutes: React.PropTypes.func.isRequired,
     setBreakLengthMinutes: React.PropTypes.func.isRequired,
     setSoundEnabled: React.PropTypes.func.isRequired,
+    setNotificationsEnabled: React.PropTypes.func.isRequired,
     soundEnabled: React.PropTypes.bool,
+    notificationsEnabled: React.PropTypes.bool,
   };
 
   static defaultProps = {
     breakLengthMinutes: 5,
     sessionLengthMinutes: 25,
     soundEnabled: true,
+    notificationsEnabled: true,
   };
 
   state = {
@@ -45,8 +48,12 @@ class Settings extends React.Component {
     this.setState({ breakLengthMinutes: null });
   };
 
-  onSoundEnabledToggled = (e, isInputChecked) => {
+  onSoundToggled = (e, isInputChecked) => {
     this.props.setSoundEnabled(isInputChecked);
+  };
+
+  onNotificationsToggled = (e, isInputChecked) => {
+    this.props.setNotificationsEnabled(isInputChecked);
   };
 
   getSessionLength = () => this.state.sessionLengthMinutes
@@ -93,7 +100,14 @@ class Settings extends React.Component {
           <Toggle
             label="Sounds"
             toggled={this.props.soundEnabled}
-            onToggle={this.onSoundEnabledToggled}
+            onToggle={this.onSoundToggled}
+          />
+        </div>
+        <div className={styles.toggleContainer}>
+          <Toggle
+            label="Notifications"
+            toggled={this.props.notificationsEnabled}
+            onToggle={this.onNotificationsToggled}
           />
         </div>
       </div>
