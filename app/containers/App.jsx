@@ -17,6 +17,7 @@ const App = (props) => (
     <AppBar
       title="Paulmodoro"
       iconElementLeft={<IconButton onClick={props.onMenuToggle}><NavigationMenu /></IconButton>}
+      style={{ position: 'fixed', top: 0 }}
     />
     <Drawer open={props.drawerOpen} docked={false} onRequestChange={props.onMenuToggle}>
       <Menu>

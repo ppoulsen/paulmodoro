@@ -10,3 +10,8 @@
   margin-top: 16px;
   max-width: 250px;
 }
+
+.slackToken {
+  display: flex;
+  width: 100%;
+}

@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import {
   SESSION_TIMER,
   BREAK_TIMER,
@@ -7,12 +7,6 @@ import {
 export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const TICK_TIMER = 'TICK_TIMER';
-
-export function stopTimer() {
-  return {
-    type: STOP_TIMER,
-  };
-}
 
 function eventShouldNotify(evt) {
   if (evt === 'start') {
@@ -58,7 +52,40 @@ function getNotificationClickHandler(notification, dispatch, evt) {
   };
 }
 
-function notifyIfEnabled(settings, dispatch, evt) {
+function sendSlackStatus(evt, token, state) {
+  const { sessionLengthMinutes } = state.settings;
+  const endTime = moment().add(sessionLengthMinutes, 'minutes');
+  const timeDisplay = `${endTime.format('h:mm A')} ${moment.tz(moment.tz.guess()).format('z')}`;
+  let profile = null;
+  switch (evt) {
+    case 'start':
+      profile = {
+        status_text: `Pomodoro ends at ${timeDisplay}`,
+        status_emoji: ':tomato:',
+      };
+      break;
+    default:
+      profile = {
+        status_text: '',
+        status_emoji: '',
+      };
+      break;
+  }
+  const profileJson = JSON.stringify(profile);
+  const encodedProfile = encodeURIComponent(profileJson);
+  const baseUrl = 'https://slack.com/api/users.profile.set';
+  const fullUrl = `${baseUrl}?token=${token}&profile=${encodedProfile}`;
+  return fetch(fullUrl, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'omit',
+    cache: 'no-cache',
+    referrer: 'no-referred',
+  });
+}
+
+function notifyIfEnabled(state, dispatch, evt) {
+  const { settings } = state;
   if (settings.soundEnabled) {
     new Audio(`static/audio/${evt}.mp3`).play();
   }
@@ -69,6 +96,21 @@ function notifyIfEnabled(settings, dispatch, evt) {
     });
     notification.onclick = getNotificationClickHandler(notification, dispatch, evt);
   }
+  settings.slackLegacyTokens.filter(t => t.isEnabled).forEach(token => {
+    sendSlackStatus(evt, token.value, state);
+  });
+}
+
+export function stopTimer() {
+  return (dispatch, getState) => {
+    dispatch({
+      type: STOP_TIMER,
+    });
+    const state = getState();
+    state.settings.slackLegacyTokens.filter(t => t.isEnabled).forEach(token => {
+      sendSlackStatus('canceled', token.value, state);
+    });
+  };
 }
 
 export function startTimer(force) {
@@ -82,7 +124,7 @@ export function startTimer(force) {
       type: START_TIMER,
       timerType: SESSION_TIMER,
     });
-    notifyIfEnabled(stateAtStart.settings, dispatch, 'start');
+    notifyIfEnabled(stateAtStart, dispatch, 'start');
 
     let interval;
     const tick = () => {
@@ -92,7 +134,7 @@ export function startTimer(force) {
         sessionLengthMinutes,
         breakLengthMinutes,
       } = state.settings;
-      const notify = notifyIfEnabled.bind(null, state.settings, dispatch);
+      const notify = notifyIfEnabled.bind(null, state, dispatch);
       const isSession = timerType === SESSION_TIMER;
       const durationMinutes = isSession ? sessionLengthMinutes : breakLengthMinutes;
       const duration = moment.duration(durationMinutes, 'minutes');

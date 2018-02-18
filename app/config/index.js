@@ -7,6 +7,7 @@ const config = new Store({
       breakLengthMinutes: 5,
       soundEnabled: true,
       notificationsEnabled: true,
+      slackLegacyTokens: [],
     },
   },
   name: 'paulmodoro-settings',

@@ -1,6 +1,8 @@
 import React from 'react';
+import { shell } from 'electron';
 import Divider from 'material-ui/Divider';
 import Slider from 'material-ui/Slider';
+import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import styles from './Settings.css';
 
@@ -12,8 +14,13 @@ class Settings extends React.Component {
     setBreakLengthMinutes: React.PropTypes.func.isRequired,
     setSoundEnabled: React.PropTypes.func.isRequired,
     setNotificationsEnabled: React.PropTypes.func.isRequired,
+    setSlackLegacyTokens: React.PropTypes.func.isRequired,
     soundEnabled: React.PropTypes.bool,
     notificationsEnabled: React.PropTypes.bool,
+    slackLegacyTokens: React.PropTypes.arrayOf(React.PropTypes.shape({
+      isEnabled: React.PropTypes.bool,
+      value: React.PropTypes.string,
+    })),
   };
 
   static defaultProps = {
@@ -21,6 +28,7 @@ class Settings extends React.Component {
     sessionLengthMinutes: 25,
     soundEnabled: true,
     notificationsEnabled: true,
+    slackLegacyTokens: [],
   };
 
   state = {
@@ -56,6 +64,33 @@ class Settings extends React.Component {
     this.props.setNotificationsEnabled(isInputChecked);
   };
 
+  onSlackLegacyTokenChanged = (index, newValue) => {
+    const nextTokens = [...this.props.slackLegacyTokens];
+    if (index >= nextTokens.length) {
+      nextTokens.push({
+        value: newValue,
+        isEnabled: true,
+      });
+    } else if (!newValue || !newValue.length) {
+      nextTokens.splice(index, 1);
+    } else {
+      nextTokens[index] = {
+        ...nextTokens[index],
+        value: newValue,
+      };
+    }
+    this.props.setSlackLegacyTokens(nextTokens);
+  };
+
+  onSlackLegacyEnabledChanged = (index, isEnabled) => {
+    const nextTokens = [...this.props.slackLegacyTokens];
+    nextTokens[index] = {
+      ...nextTokens[index],
+      isEnabled,
+    };
+    this.props.setSlackLegacyTokens(nextTokens);
+  };
+
   getSessionLength = () => this.state.sessionLengthMinutes
       || this.props.sessionLengthMinutes
       || 25;
@@ -63,6 +98,46 @@ class Settings extends React.Component {
   getBreakLength = () => this.state.breakLengthMinutes
       || this.props.breakLengthMinutes
       || 5;
+
+  getSlackLegacyAccessTokenInputs = () => {
+    const inputs = this.props.slackLegacyTokens.map((token, i) => (
+      /* eslint-disable react/no-array-index-key */
+      <div key={i} className={styles.slackToken}>
+        <div>
+          <TextField
+            floatingLabelText="Slack Legacy Access Token"
+            value={token.value}
+            style={{ marginTop: '-16px' }}
+            onChange={(e, newValue) => this.onSlackLegacyTokenChanged(i, newValue)}
+          />
+        </div>
+        <div>
+          <Toggle
+            toggled={token.isEnabled}
+            onToggle={(e, isInputChecked) => this.onSlackLegacyEnabledChanged(i, isInputChecked)}
+          />
+        </div>
+      </div>
+      /* eslint-enable react/no-array-index-key */
+    ));
+    inputs.push(
+      <div key={inputs.length}>
+        <div>
+          <TextField
+            floatingLabelText="Slack Legacy Access Token"
+            value=""
+            style={{ marginTop: '-16px' }}
+            onChange={(e, newValue) => this.onSlackLegacyTokenChanged(inputs.length, newValue)}
+          />
+        </div>
+      </div>,
+    );
+    return inputs;
+  };
+
+  openSlackTokenPage = () => {
+    shell.openExternal('https://api.slack.com/custom-integrations/legacy-tokens');
+  }
 
   render() {
     return (
@@ -110,6 +185,12 @@ class Settings extends React.Component {
             onToggle={this.onNotificationsToggled}
           />
         </div>
+        <h2>Slack Integration</h2>
+        <Divider />
+        {/* eslint-disable jsx-a11y/no-static-element-interactions */}
+        <p>Get a legacy Slack token <a className="pseudoLink" onClick={this.openSlackTokenPage}>here</a></p>
+        {/* eslint-enable jsx-a11y/no-static-element-interactions */}
+        {this.getSlackLegacyAccessTokenInputs()}
       </div>
     );
   }

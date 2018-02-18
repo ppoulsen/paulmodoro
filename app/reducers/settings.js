@@ -3,6 +3,7 @@ import {
   SET_BREAK_LENGTH_MINUTES,
   SET_SOUND_ENABLED,
   SET_NOTIFICATIONS_ENABLED,
+  SET_SLACK_LEGACY_TOKENS,
 } from '../actions/settings';
 import config from '../config';
 
@@ -37,6 +38,13 @@ export default function settings(state = {
       nextState = {
         ...state,
         notificationsEnabled: action.notificationsEnabled,
+      };
+      break;
+
+    case SET_SLACK_LEGACY_TOKENS:
+      nextState = {
+        ...state,
+        slackLegacyTokens: action.slackLegacyTokens,
       };
       break;
 

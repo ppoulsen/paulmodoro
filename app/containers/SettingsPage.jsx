@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     sessionLengthMinutes: state.settings.sessionLengthMinutes,
     soundEnabled: state.settings.soundEnabled,
     notificationsEnabled: state.settings.notificationsEnabled,
+    slackLegacyTokens: state.settings.slackLegacyTokens,
   };
 }
 

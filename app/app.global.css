@@ -5,8 +5,18 @@
 body {
   position: relative;
   color: white;
-  height: 100vh;
+  height: 100%;
   background-color: #212121;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
+}
+
+.pseudoLink {
+  text-decoration: underline;
+  color: #03A9F4;
+  cursor: pointer;
+}
+
+.pseudoLink:hover {
+  color: #2196F3;
 }
