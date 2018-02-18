@@ -7,6 +7,7 @@ function mapStateToProps(state) {
   return {
     breakLengthMinutes: state.settings.breakLengthMinutes,
     sessionLengthMinutes: state.settings.sessionLengthMinutes,
+    soundEnabled: state.settings.soundEnabled,
   };
 }
 

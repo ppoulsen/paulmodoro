@@ -5,6 +5,7 @@ const config = new Store({
     settings: {
       sessionLengthMinutes: 25,
       breakLengthMinutes: 5,
+      soundEnabled: true,
     },
   },
   name: 'paulmodoro-settings',

@@ -1,6 +1,7 @@
 import {
   SET_SESSION_LENGTH_MINUTES,
   SET_BREAK_LENGTH_MINUTES,
+  SET_SOUND_ENABLED,
 } from '../actions/settings';
 import config from '../config';
 
@@ -21,6 +22,13 @@ export default function settings(state = {
       nextState = {
         ...state,
         breakLengthMinutes: action.minutes,
+      };
+      break;
+
+    case SET_SOUND_ENABLED:
+      nextState = {
+        ...state,
+        soundEnabled: action.soundEnabled,
       };
       break;
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Divider from 'material-ui/Divider';
 import Slider from 'material-ui/Slider';
+import Toggle from 'material-ui/Toggle';
 import styles from './Settings.css';
 
 class Settings extends React.Component {
@@ -9,11 +10,14 @@ class Settings extends React.Component {
     sessionLengthMinutes: React.PropTypes.number,
     setSessionLengthMinutes: React.PropTypes.func.isRequired,
     setBreakLengthMinutes: React.PropTypes.func.isRequired,
+    setSoundEnabled: React.PropTypes.func.isRequired,
+    soundEnabled: React.PropTypes.bool,
   };
 
   static defaultProps = {
     breakLengthMinutes: 5,
     sessionLengthMinutes: 25,
+    soundEnabled: true,
   };
 
   state = {
@@ -39,6 +43,10 @@ class Settings extends React.Component {
   onBreakLengthSave = () => {
     this.props.setBreakLengthMinutes(this.breakLengthMinutes);
     this.setState({ breakLengthMinutes: null });
+  };
+
+  onSoundEnabledToggled = (e, isInputChecked) => {
+    this.props.setSoundEnabled(isInputChecked);
   };
 
   getSessionLength = () => this.state.sessionLengthMinutes
@@ -79,6 +87,15 @@ class Settings extends React.Component {
           onChange={this.onBreakLengthChange}
           onDragStop={this.onBreakLengthSave}
         />
+        <h2>Notifications</h2>
+        <Divider />
+        <div className={styles.toggleContainer}>
+          <Toggle
+            label="Sounds"
+            toggled={this.props.soundEnabled}
+            onToggle={this.onSoundEnabledToggled}
+          />
+        </div>
       </div>
     );
   }

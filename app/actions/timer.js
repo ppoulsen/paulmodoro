@@ -14,9 +14,16 @@ export function stopTimer() {
   };
 }
 
+function playSoundIfEnabled(soundEnabled, sound) {
+  if (soundEnabled) {
+    new Audio(`static/audio/${sound}.mp3`).play();
+  }
+}
+
 export function startTimer() {
   return (dispatch, getState) => {
-    if (getState().timer.startTime) {
+    const stateAtStart = getState();
+    if (stateAtStart.timer.startTime) {
       return;
     }
 
@@ -24,13 +31,14 @@ export function startTimer() {
       type: START_TIMER,
       timerType: SESSION_TIMER,
     });
-    new Audio('static/audio/start.mp3').play();
+    playSoundIfEnabled(stateAtStart.settings.soundEnabled, 'start');
 
     let interval;
     const tick = () => {
       const state = getState();
       const { startTime, timerType } = state.timer;
-      const { sessionLengthMinutes, breakLengthMinutes } = state.settings;
+      const { sessionLengthMinutes, breakLengthMinutes, soundEnabled } = state.settings;
+      const playSound = playSoundIfEnabled.bind(null, soundEnabled);
       const isSession = timerType === SESSION_TIMER;
       const durationMinutes = isSession ? sessionLengthMinutes : breakLengthMinutes;
       const duration = moment.duration(durationMinutes, 'minutes');
@@ -43,10 +51,10 @@ export function startTimer() {
           type: START_TIMER,
           timerType: BREAK_TIMER,
         });
-        new Audio('static/audio/start-break.mp3').play();
+        playSound('start-break');
       } else {
         if (startTime) {
-          new Audio('static/audio/break-over.mp3').play();
+          playSound('break-over');
         }
         clearInterval(interval);
         dispatch(stopTimer());
