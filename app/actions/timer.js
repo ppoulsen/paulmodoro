@@ -24,6 +24,7 @@ export function startTimer() {
       type: START_TIMER,
       timerType: SESSION_TIMER,
     });
+    new Audio('static/audio/start.mp3').play();
 
     let interval;
     const tick = () => {
@@ -42,7 +43,11 @@ export function startTimer() {
           type: START_TIMER,
           timerType: BREAK_TIMER,
         });
+        new Audio('static/audio/start-break.mp3').play();
       } else {
+        if (startTime) {
+          new Audio('static/audio/break-over.mp3').play();
+        }
         clearInterval(interval);
         dispatch(stopTimer());
       }
