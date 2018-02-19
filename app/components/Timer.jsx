@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import LinearProgress from 'material-ui/LinearProgress';
 import Paper from 'material-ui/Paper';
@@ -62,13 +63,13 @@ const Timer = props => {
 };
 
 Timer.propTypes = {
-  startTimer: React.PropTypes.func.isRequired,
-  stopTimer: React.PropTypes.func.isRequired,
-  timer: React.PropTypes.shape({
-    startTime: React.PropTypes.object,
-    timerType: React.PropTypes.oneOf([SESSION_TIMER, BREAK_TIMER]),
+  startTimer: PropTypes.func.isRequired,
+  stopTimer: PropTypes.func.isRequired,
+  timer: PropTypes.shape({
+    startTime: PropTypes.object,
+    timerType: PropTypes.oneOf([SESSION_TIMER, BREAK_TIMER]),
   }).isRequired,
-  durationMinutes: React.PropTypes.number.isRequired,
+  durationMinutes: PropTypes.number.isRequired,
 };
 
 export default Timer;

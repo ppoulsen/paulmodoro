@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { shell } from 'electron';
 import Divider from 'material-ui/Divider';
 import Slider from 'material-ui/Slider';
@@ -8,18 +9,18 @@ import styles from './Settings.css';
 
 class Settings extends React.Component {
   static propTypes = {
-    breakLengthMinutes: React.PropTypes.number,
-    sessionLengthMinutes: React.PropTypes.number,
-    setSessionLengthMinutes: React.PropTypes.func.isRequired,
-    setBreakLengthMinutes: React.PropTypes.func.isRequired,
-    setSoundEnabled: React.PropTypes.func.isRequired,
-    setNotificationsEnabled: React.PropTypes.func.isRequired,
-    setSlackLegacyTokens: React.PropTypes.func.isRequired,
-    soundEnabled: React.PropTypes.bool,
-    notificationsEnabled: React.PropTypes.bool,
-    slackLegacyTokens: React.PropTypes.arrayOf(React.PropTypes.shape({
-      isEnabled: React.PropTypes.bool,
-      value: React.PropTypes.string,
+    breakLengthMinutes: PropTypes.number,
+    sessionLengthMinutes: PropTypes.number,
+    setSessionLengthMinutes: PropTypes.func.isRequired,
+    setBreakLengthMinutes: PropTypes.func.isRequired,
+    setSoundEnabled: PropTypes.func.isRequired,
+    setNotificationsEnabled: PropTypes.func.isRequired,
+    setSlackLegacyTokens: PropTypes.func.isRequired,
+    soundEnabled: PropTypes.bool,
+    notificationsEnabled: PropTypes.bool,
+    slackLegacyTokens: PropTypes.arrayOf(PropTypes.shape({
+      isEnabled: PropTypes.bool,
+      value: PropTypes.string,
     })),
   };
 
