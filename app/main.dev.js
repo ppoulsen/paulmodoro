@@ -9,7 +9,8 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  *
  */
-import { app, BrowserWindow } from 'electron';
+import path from 'path';
+import { app, BrowserWindow, protocol } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -21,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
-  const path = require('path');
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
@@ -53,7 +53,16 @@ app.on('window-all-closed', () => {
 });
 
 
+protocol.registerStandardSchemes(['paulmodoro']);
 app.on('ready', async () => {
+  protocol.registerFileProtocol('paulmodoro', (request, callback) => {
+    const url = request.url.substr('paulmodoro://'.length);
+    if (process.env.NODE_ENV === 'development') {
+      callback({ path: path.normalize(`${__dirname}/${url}`) });
+    } else {
+      callback({ path: path.normalize(`${__dirname}/dist/${url}`) });
+    }
+  });
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }

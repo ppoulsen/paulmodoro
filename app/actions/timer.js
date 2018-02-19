@@ -87,7 +87,7 @@ function sendSlackStatus(evt, token, state) {
 function notifyIfEnabled(state, dispatch, evt) {
   const { settings } = state;
   if (settings.soundEnabled) {
-    new Audio(`static/audio/${evt}.mp3`).play();
+    new Audio(`paulmodoro://static/audio/${evt}.mp3`).play();
   }
   if (settings.notificationsEnabled && eventShouldNotify(evt)) {
     const notification = new Notification(getNotificationTitle(evt), {

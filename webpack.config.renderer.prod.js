@@ -4,6 +4,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
@@ -170,6 +171,10 @@ export default merge.smart(baseConfig, {
     }),
 
     new ExtractTextPlugin('style.css'),
+
+    new CopyWebpackPlugin([
+      { from: './app/static/audio/*.mp3', to: './static/audio/[name].mp3' },
+    ]),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
