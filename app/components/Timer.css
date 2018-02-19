@@ -12,6 +12,7 @@
 
 .counter {
   text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
   font-size: 10vw;
   font-weight: bold;
   padding: 1rem 0;

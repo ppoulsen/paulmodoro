@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import LinearProgress from 'material-ui/LinearProgress';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import styles from './Timer.css';
@@ -12,6 +13,7 @@ const Timer = props => {
   const { startTimer, stopTimer, timer, durationMinutes } = props;
   let remaining = 'Not Started';
   const duration = moment.duration(durationMinutes, 'minutes');
+  let percentage = 0;
   if (timer.startTime) {
     const endTime = timer.startTime.clone().add(duration);
     const now = moment();
@@ -22,6 +24,8 @@ const Timer = props => {
       diffMs = 0;
     }
 
+    const durationMs = durationMinutes * 60 * 1000;
+    percentage = ((durationMs - diffMs) / durationMs) * 100;
     remaining = moment(diffMs).format('mm:ss.SSS');
   } else if (duration) {
     remaining = moment.utc(duration.asMilliseconds()).format('mm:ss.SSS');
@@ -45,6 +49,7 @@ const Timer = props => {
       <h1>Timer</h1>
       <h3>{subheader}</h3>
       <Paper className={styles.paper} zDepth={3}>
+        <LinearProgress mode="determinate" value={percentage} />
         <div className={`counter ${styles.counter}`} data-tid="timer">
           {remaining}
         </div>
