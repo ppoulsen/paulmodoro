@@ -16,16 +16,18 @@ export default class Timer extends React.Component {
     startTimer: PropTypes.func.isRequired,
     cancelTimer: PropTypes.func.isRequired,
     updateTimerDescription: PropTypes.func.isRequired,
+    loadRecentDescriptions: PropTypes.func.isRequired,
     timer: PropTypes.shape({
       startTime: PropTypes.object,
       timerType: PropTypes.oneOf([SESSION_TIMER, BREAK_TIMER]),
     }).isRequired,
     durationMinutes: PropTypes.number.isRequired,
+    recentDescriptions: PropTypes.arrayOf(PropTypes.string).isRequired,
   }
 
-  // TODO: Actually generate these from past ones
-  getAutoCompleteDescriptions = () => this.defaultDescriptions;
-  defaultDescriptions = [];
+  componentDidMount() {
+    this.props.loadRecentDescriptions();
+  }
 
   renderButton = () => {
     const { timer, startTimer, cancelTimer } = this.props;
@@ -49,16 +51,18 @@ export default class Timer extends React.Component {
   };
 
   renderDescription = () => {
-    const { timer, updateTimerDescription } = this.props;
+    const { timer, updateTimerDescription, recentDescriptions } = this.props;
     const hasDescription = timer.description && timer.description.length;
     if (timer.startTime) return hasDescription ? <h2>{timer.description}</h2> : null;
     return (
       <AutoComplete
         floatingLabelText="Description"
         filter={AutoComplete.fuzzyFilter}
-        dataSource={this.getAutoCompleteDescriptions()}
+        dataSource={recentDescriptions}
         maxSearchResults={5}
         onUpdateInput={updateTimerDescription}
+        fullWidth
+        openOnFocus
       />
     );
   };

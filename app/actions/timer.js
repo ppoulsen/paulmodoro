@@ -60,7 +60,12 @@ function startInterval(getState, dispatch) {
   let interval;
   const tick = () => {
     const state = getState();
-    const { startTime, timerType, key } = state.timer;
+    const {
+      startTime,
+      timerType,
+      key,
+      description,
+    } = state.timer;
     const {
       sessionLengthMinutes,
       breakLengthMinutes,
@@ -81,6 +86,7 @@ function startInterval(getState, dispatch) {
         type: START_TIMER,
         timerType: BREAK_TIMER,
         startTime: nextStartTime,
+        description,
       });
       if (key) {
         updateSession(key, {
@@ -122,6 +128,7 @@ export function startTimer(force) {
       type: START_TIMER,
       timerType: SESSION_TIMER,
       startTime,
+      description: state.timer.description,
     });
     notifyIfEnabled(state, dispatch.bind(null, startTimer(true)), 'start');
     startInterval(getState, dispatch);
