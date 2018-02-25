@@ -10,6 +10,14 @@ export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const TICK_TIMER = 'TICK_TIMER';
 export const SESSION_KEY = 'SESSION_KEY_TIMER';
+export const UPDATE_TIMER_DESCRIPTION = 'UPDATE_TIMER_DESCRIPTION';
+
+export function updateTimerDescription(description) {
+  return {
+    type: UPDATE_TIMER_DESCRIPTION,
+    description,
+  };
+}
 
 function stopTimer() {
   return (dispatch, getState) => {
@@ -104,8 +112,8 @@ function startInterval(getState, dispatch) {
 
 export function startTimer(force) {
   return (dispatch, getState) => {
-    const stateAtStart = getState();
-    if (stateAtStart.timer.startTime && !force) {
+    const state = getState();
+    if (state.timer.startTime && !force) {
       return;
     }
 
@@ -115,11 +123,12 @@ export function startTimer(force) {
       timerType: SESSION_TIMER,
       startTime,
     });
-    notifyIfEnabled(stateAtStart, dispatch.bind(null, startTimer(true)), 'start');
+    notifyIfEnabled(state, dispatch.bind(null, startTimer(true)), 'start');
     startInterval(getState, dispatch);
     createSession({
       startTime: startTime.toDate(),
       startTimeIso: startTime.format(),
+      description: state.timer.description || null,
     }).then(key => dispatch({
       type: SESSION_KEY,
       key,

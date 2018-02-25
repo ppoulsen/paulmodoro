@@ -3,6 +3,7 @@ import {
   STOP_TIMER,
   TICK_TIMER,
   SESSION_KEY,
+  UPDATE_TIMER_DESCRIPTION,
 } from '../actions/timer';
 import {
   SESSION_TIMER,
@@ -34,6 +35,11 @@ export default function timer(state = {
       return {
         ...state,
         key: action.key,
+      };
+    case UPDATE_TIMER_DESCRIPTION:
+      return {
+        ...state,
+        description: action.description,
       };
     default:
       return state;
