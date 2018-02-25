@@ -11,7 +11,7 @@ import {
 } from '../constants/timerType';
 
 const Timer = props => {
-  const { startTimer, stopTimer, timer, durationMinutes } = props;
+  const { startTimer, cancelTimer, timer, durationMinutes } = props;
   let remaining = 'Not Started';
   const duration = moment.duration(durationMinutes, 'minutes');
   let percentage = 0;
@@ -38,10 +38,10 @@ const Timer = props => {
     button = <RaisedButton label="Start Session" onClick={startTimer} primary />;
     subheader = 'Start Next Pomodoro';
   } else if (timer.timerType === SESSION_TIMER) {
-    button = <RaisedButton label="Cancel Session" onClick={stopTimer} secondary />;
+    button = <RaisedButton label="Cancel Session" onClick={cancelTimer} secondary />;
     subheader = 'Pomodoro In Progress';
   } else {
-    button = <RaisedButton label="Cancel Break" onClick={stopTimer} secondary />;
+    button = <RaisedButton label="Cancel Break" onClick={cancelTimer} secondary />;
     subheader = 'Break In Progress';
   }
 
@@ -64,7 +64,7 @@ const Timer = props => {
 
 Timer.propTypes = {
   startTimer: PropTypes.func.isRequired,
-  stopTimer: PropTypes.func.isRequired,
+  cancelTimer: PropTypes.func.isRequired,
   timer: PropTypes.shape({
     startTime: PropTypes.object,
     timerType: PropTypes.oneOf([SESSION_TIMER, BREAK_TIMER]),
