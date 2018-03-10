@@ -42,13 +42,13 @@ export function cancelTimer() {
       if (timerType === SESSION_TIMER) {
         updateSession(key, {
           canceledSessionTime: time.toDate(),
-          canceledSessionTimeIson: time.format(),
+          canceledSessionTimeIso: time.format(),
           finishedSession: false,
         });
       } else if (timerType === BREAK_TIMER) {
         updateSession(key, {
           canceledBreakTime: time.toDate(),
-          canceledBreakTimeIson: time.format(),
+          canceledBreakTimeIso: time.format(),
           finishedBreak: false,
         });
       }

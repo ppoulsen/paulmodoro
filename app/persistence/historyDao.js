@@ -48,3 +48,20 @@ export function getRecentDescriptions(maxSessions = 1000) {
     tx.onerror = e => reject(e);
   }));
 }
+
+export function getSessions() {
+  return getDb().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction('history', 'readonly');
+    const store = tx.objectStore('history');
+    const cursorRequest = store.openCursor(undefined, 'prev');
+    const results = [];
+    cursorRequest.onsuccess = event => {
+      const cursor = event.target.result;
+      if (!cursor) return;
+      if (cursor.value) results.push(cursor.value);
+      cursor.continue();
+    };
+    tx.oncomplete = () => resolve(results);
+    tx.onerror = e => reject(e);
+  }));
+}

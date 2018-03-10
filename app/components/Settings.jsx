@@ -121,7 +121,7 @@ class Settings extends React.Component {
       </div>
       /* eslint-enable react/no-array-index-key */
     ));
-    inputs.push(
+    inputs.push((
       <div key={inputs.length}>
         <div>
           <TextField
@@ -131,8 +131,8 @@ class Settings extends React.Component {
             onChange={(e, newValue) => this.onSlackLegacyTokenChanged(inputs.length, newValue)}
           />
         </div>
-      </div>,
-    );
+      </div>
+    ));
     return inputs;
   };
 

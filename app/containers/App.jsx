@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 import IconAlarm from 'material-ui/svg-icons/action/alarm';
+import IconHistory from 'material-ui/svg-icons/action/history';
 import IconSettings from 'material-ui/svg-icons/action/settings';
 
 import { toggleMenu } from '../actions/menu';
@@ -22,6 +23,7 @@ const App = (props) => (
     <Drawer open={props.drawerOpen} docked={false} onRequestChange={props.onMenuToggle}>
       <Menu>
         <MenuItem primaryText="Timer" leftIcon={<IconAlarm />} onClick={() => { props.history.push('/timer'); props.onMenuToggle(); }} />
+        <MenuItem primaryText="History" leftIcon={<IconHistory />} onClick={() => { props.history.push('/history'); props.onMenuToggle(); }} />
         <MenuItem primaryText="Settings" leftIcon={<IconSettings />} onClick={() => { props.history.push('/settings'); props.onMenuToggle(); }} />
       </Menu>
     </Drawer>
